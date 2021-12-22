@@ -10,7 +10,6 @@ export const myTopTracks = (setterFn, token) => {
     },
   })
     .then((response) => {
-      console.log("response", response.data.items);
       setterFn(response.data.items);
     })
     .catch((error) => {
@@ -28,8 +27,12 @@ export const albumTracks = (albumId, setterFn, token) => {
     },
   })
     .then((response) => {
-      console.log(response.data.tracks.items);
-      setterFn(response.data.tracks.items);
+      // Transform the response
+      const transformedResponse = response.data.tracks.items.map((item) => {
+        item.album = { images: response.data.images, name: response.data.name };
+        return item;
+      });
+      setterFn(transformedResponse);
     })
     .catch((error) => {
       console.log("error", error);

@@ -3,17 +3,19 @@ import {
   StyleSheet,
   Text,
   SafeAreaView,
-  Button,
   Pressable,
   Image,
   FlatList,
+  View,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { ResponseType, useAuthRequest } from "expo-auth-session";
 import { myTopTracks, albumTracks } from "./utils/apiOptions";
 import Song from "./components/Song";
+import Colors from "./Themes/colors";
+import Images from "./Themes/images";
 
-// Endpoint
+// Endpoints
 const discovery = {
   authorizationEndpoint: "https://accounts.spotify.com/authorize",
   tokenEndpoint: "https://accounts.spotify.com/api/token",
@@ -55,8 +57,10 @@ export default function App() {
 
   useEffect(() => {
     if (token) {
-      // Authenticated
-      myTopTracks(setTracks, token);
+      // Authenticated, make API request
+
+      // myTopTracks(setTracks, token);
+      albumTracks(ALBUM_ID, setTracks, token);
     }
   }, [token]);
 
@@ -84,17 +88,27 @@ export default function App() {
           }}
         >
           <Image
-            source={require("./assets/spotify-logo.png")}
+            source={Images.spotify}
             style={{ width: 16, height: 16, marginRight: 8 }}
           />
           <Text style={styles.spotifyButtonText}>CONNECT WITH SPOTIFY</Text>
         </Pressable>
       ) : (
-        <FlatList
-          data={tracks}
-          renderItem={renderItems}
-          keyExtractor={(_, id) => `${id}`}
-        />
+        <>
+          <View style={styles.titleContainer}>
+            <Image
+              source={Images.spotify}
+              style={{ width: 24, height: 24, marginRight: 8 }}
+            />
+            <Text style={styles.spotifyTitle}>My Top Tracks</Text>
+          </View>
+          <FlatList
+            data={tracks}
+            renderItem={renderItems}
+            keyExtractor={(_, id) => `${id}`}
+            showsVerticalScrollIndicator={false}
+          />
+        </>
       )}
     </SafeAreaView>
   );
@@ -102,12 +116,24 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: Colors.background,
     justifyContent: "center",
-    marginHorizontal: 24,
+    alignItems: "center",
+    flex: 1,
+  },
+  titleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  spotifyTitle: {
+    fontSize: 24,
+    color: "white",
+    fontWeight: "700",
   },
   spotifyButton: {
-    backgroundColor: "#1DB954",
+    backgroundColor: Colors.spotify,
     padding: 10,
     borderRadius: 999999,
     display: "flex",

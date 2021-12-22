@@ -1,5 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
+import Colors from "../Themes/colors";
+import millisToMinutesAndSeconds from "../utils/millisToMinuteSeconds";
 
 const Song = ({
   imageUrl,
@@ -9,24 +11,22 @@ const Song = ({
   duration,
   albumName,
 }) => {
-  function millisToMinutesAndSeconds(millis) {
-    var minutes = Math.floor(millis / 60000);
-    var seconds = ((millis % 60000) / 1000).toFixed(0);
-    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-  }
-
   return (
     <View style={styles.song}>
       <Text style={styles.songId}>{songIdx + 1}</Text>
       <Image source={{ uri: imageUrl }} style={styles.songImage} />
       <View style={styles.songNameArtist}>
-        <Text numberOfLines={1}>{songTitle}</Text>
-        <Text style={{ color: "gray" }}>{songArtist}</Text>
+        <Text style={{ color: "white" }} numberOfLines={1}>
+          {songTitle}
+        </Text>
+        <Text style={{ color: Colors.gray }}>{songArtist}</Text>
       </View>
-      <Text numberOfLines={1} style={{ flexBasis: "25%" }}>
+      <Text numberOfLines={1} style={{ flexBasis: "25%", color: "white" }}>
         {albumName}
       </Text>
-      <Text>{millisToMinutesAndSeconds(duration)}</Text>
+      <Text style={{ color: "white" }}>
+        {millisToMinutesAndSeconds(duration)}
+      </Text>
     </View>
   );
 };
@@ -36,6 +36,7 @@ export default Song;
 const styles = StyleSheet.create({
   songId: {
     marginRight: 16,
+    color: Colors.gray,
   },
   songImage: {
     width: 64,
