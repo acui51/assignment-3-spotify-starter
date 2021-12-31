@@ -6,7 +6,7 @@ import {
   Pressable,
   Image,
   FlatList,
-  View,
+  View
 } from "react-native";
 import { useState, useEffect } from "react";
 import { ResponseType, useAuthRequest } from "expo-auth-session";
@@ -14,14 +14,13 @@ import { myTopTracks, albumTracks } from "./utils/apiOptions";
 import Song from "./components/Song";
 import Colors from "./Themes/colors";
 import Images from "./Themes/images";
+import { REDIRECT_URI, SCOPES, CLIENT_ID, ALBUM_ID } from "../utils/constants";
 
 // Endpoints
 const discovery = {
   authorizationEndpoint: "https://accounts.spotify.com/authorize",
-  tokenEndpoint: "https://accounts.spotify.com/api/token",
+  tokenEndpoint: "https://accounts.spotify.com/api/token"
 };
-
-const ALBUM_ID = "0FHpjWlnUmplF5ciL84Wpa?si=LW1QU1cdTHOPM74faZse9Q";
 
 export default function App() {
   const [token, setToken] = useState("");
@@ -29,21 +28,12 @@ export default function App() {
   const [request, response, promptAsync] = useAuthRequest(
     {
       responseType: ResponseType.Token,
-      clientId: "ce792b478e6143d396d126a60eb46a76",
-      scopes: [
-        "user-read-currently-playing",
-        "user-read-recently-played",
-        "user-read-playback-state",
-        "user-top-read",
-        "user-modify-playback-state",
-        "streaming",
-        "user-read-email",
-        "user-read-private",
-      ],
+      clientId: CLIENT_ID,
+      scopes: SCOPES,
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
       usePKCE: false,
-      redirectUri: "exp://192.168.1.101:19000",
+      redirectUri: REDIRECT_URI
     },
     discovery
   );
@@ -59,6 +49,8 @@ export default function App() {
     if (token) {
       // Authenticated, make API request
 
+      // TODO: Select which option you want: Top Tracks or Album Tracks
+      // Comment out the one you are not using
       // myTopTracks(setTracks, token);
       albumTracks(ALBUM_ID, setTracks, token);
     }
@@ -80,6 +72,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
+      {/* TODO */}
       {!token ? (
         <Pressable
           style={styles.spotifyButton}
@@ -119,18 +112,18 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     justifyContent: "center",
     alignItems: "center",
-    flex: 1,
+    flex: 1
   },
   titleContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 16,
+    marginBottom: 16
   },
   spotifyTitle: {
     fontSize: 24,
     color: "white",
-    fontWeight: "700",
+    fontWeight: "700"
   },
   spotifyButton: {
     backgroundColor: Colors.spotify,
@@ -138,10 +131,10 @@ const styles = StyleSheet.create({
     borderRadius: 999999,
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "center"
   },
   spotifyButtonText: {
     color: "white",
-    fontWeight: "700",
-  },
+    fontWeight: "700"
+  }
 });
