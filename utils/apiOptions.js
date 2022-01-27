@@ -6,8 +6,8 @@ export const myTopTracks = (setterFn, token) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
+      Authorization: "Bearer " + token
+    }
   })
     .then((response) => {
       setterFn(response.data.items);
@@ -23,8 +23,8 @@ export const albumTracks = (albumId, setterFn, token) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
+      Authorization: "Bearer " + token
+    }
   })
     .then((response) => {
       // Transform the response

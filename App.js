@@ -14,7 +14,7 @@ import { myTopTracks, albumTracks } from "./utils/apiOptions";
 import Song from "./components/Song";
 import Colors from "./Themes/colors";
 import Images from "./Themes/images";
-import { REDIRECT_URI, SCOPES, CLIENT_ID, ALBUM_ID } from "../utils/constants";
+import { REDIRECT_URI, SCOPES, CLIENT_ID, ALBUM_ID } from "./utils/constants";
 
 // Endpoints
 const discovery = {
@@ -72,7 +72,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      {/* TODO */}
+      {/* We can also use a ternary here because it automatically returns the JSX */}
       {!token ? (
         <Pressable
           style={styles.spotifyButton}
