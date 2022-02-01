@@ -61,7 +61,7 @@ export default function App() {
       <Song
         imageUrl={item.album.images[0].url}
         songTitle={item.name}
-        songArtist={item.artists[0].name}
+        songArtist={item.artists}
         songIdx={index}
         albumName={item.album.name}
         duration={item.duration_ms}
