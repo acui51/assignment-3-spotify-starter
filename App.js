@@ -1,21 +1,23 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, SafeAreaView } from "react-native";
-import { useState, useEffect } from "react";
-import { ResponseType, useAuthRequest } from "expo-auth-session";
-import { myTopTracks, albumTracks } from "./utils/apiOptions";
-import Colors from "./Themes/colors";
-import { REDIRECT_URI, SCOPES, CLIENT_ID, ALBUM_ID } from "./utils/constants";
-import SpotifyAuthButton from "./components/SpotifyAuthButton";
-import SongList from "./components/SongList";
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, SafeAreaView } from 'react-native';
+import { useState, useEffect } from 'react';
+import { ResponseType, useAuthRequest } from 'expo-auth-session';
+//  add linter ignore unused-imports for this line
+import { myTopTracks, albumTracks, constants } from './utils';
+import { Themes } from './assets/Themes';
+import { SpotifyAuthButton, SongList } from './components';
+
+//  add linter ignore unused-vars for this line
+const { REDIRECT_URI, SCOPES, CLIENT_ID, ALBUM_ID } = constants;
 
 // Endpoints
 const discovery = {
-  authorizationEndpoint: "https://accounts.spotify.com/authorize",
-  tokenEndpoint: "https://accounts.spotify.com/api/token"
+  authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+  tokenEndpoint: 'https://accounts.spotify.com/api/token',
 };
 
 export default function App() {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState('');
   const [tracks, setTracks] = useState([]);
   const [request, response, promptAsync] = useAuthRequest(
     {
@@ -25,13 +27,13 @@ export default function App() {
       // In order to follow the "Authorization Code Flow" to fetch token after authorizationEndpoint
       // this must be set to false
       usePKCE: false,
-      redirectUri: REDIRECT_URI
+      redirectUri: REDIRECT_URI,
     },
     discovery
   );
 
   useEffect(() => {
-    if (response?.type === "success") {
+    if (response?.type === 'success') {
       const { access_token } = response.params;
       setToken(access_token);
     }
@@ -68,9 +70,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.background,
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1
-  }
+    backgroundColor: Themes.colors.background,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
 });

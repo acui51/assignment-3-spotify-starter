@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, FlatList, Image } from "react-native";
-import React from "react";
-import Song from "./Song";
-import Images from "../Themes/images";
+import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import React from 'react';
+import Song from './Song';
+import { Themes, Images } from '../assets/Themes';
 
 const renderItems = ({ item, index }) => {
   return (
@@ -20,10 +20,7 @@ const SongList = ({ tracks }) => {
   return (
     <>
       <View style={styles.titleContainer}>
-        <Image
-          source={Images.spotify}
-          style={{ width: 24, height: 24, marginRight: 8 }}
-        />
+        <Image source={Images.spotify} style={{ width: 24, height: 24, marginRight: 8 }} />
         <Text style={styles.spotifyTitle}>My Top Tracks</Text>
       </View>
       <FlatList
@@ -36,20 +33,20 @@ const SongList = ({ tracks }) => {
   );
 };
 
-export default SongList;
-
 const styles = StyleSheet.create({
   spotifyTitle: {
     fontSize: 24,
-    color: "white",
-    fontWeight: "700"
+    color: Themes.colors.white,
+    fontWeight: '700',
   },
   titleContainer: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 16
-  }
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
 });
+
+export default SongList;
