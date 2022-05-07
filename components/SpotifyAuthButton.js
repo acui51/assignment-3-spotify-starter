@@ -4,8 +4,8 @@ import React from 'react';
 
 const SpotifyAuthButton = ({ pressFn }) => {
   return (
-    <Pressable style={styles.spotifyButton} onPress={pressFn}>
-      <Image source={Images.spotify} style={{ width: 16, height: 16, marginRight: 8 }} />
+    <Pressable style={styles.spotifyButton} onPress={pressFn} testID={'AuthButton'}>
+      <Image source={Images.spotify} style={styles.spotifyLogo} />
       <Text style={styles.spotifyButtonText}>CONNECT WITH SPOTIFY</Text>
     </Pressable>
   );
@@ -23,6 +23,11 @@ const styles = StyleSheet.create({
   spotifyButtonText: {
     color: Themes.colors.white,
     fontWeight: '700',
+  },
+  spotifyLogo: {
+    width: 16,
+    height: 16,
+    marginRight: 8,
   },
 });
 

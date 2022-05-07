@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Themes } from '../assets/Themes';
-import millisToMinutesAndSeconds from '../utils/millisToMinutesAndSeconds';
+import { millisToMinutesAndSeconds } from '../utils';
 
 const Song = ({ imageUrl, songTitle, songArtist, songIdx, duration, albumName }) => {
   return (
@@ -18,7 +18,7 @@ const Song = ({ imageUrl, songTitle, songArtist, songIdx, duration, albumName })
           {songTitle}
         </Text>
         {/* Multiple artists */}
-        <Text style={{ color: Colors.gray }} numberOfLines={1}>
+        <Text style={{ color: Themes.colors.gray }} numberOfLines={1}>
           {/* We use a ternary here to conditionally add the comma delimiter in only on non-last index artists */}
           {songArtist.map((artist, idx) =>
             idx !== songArtist.length - 1 ? (

@@ -1,5 +1,6 @@
 import millisToMinutesAndSeconds from './millisToMinutesAndSeconds';
-import constants from './constants';
-import { myTopTracks, albumTracks } from './apiOptions';
+import getEnv from './env';
+import useSpotifyAuth from './authhook';
+import { getMyTopTracks, getAlbumTracks } from './apiOptions';
 
-export { myTopTracks, albumTracks, millisToMinutesAndSeconds, constants };
+export { getMyTopTracks, getAlbumTracks, millisToMinutesAndSeconds, getEnv, useSpotifyAuth };
