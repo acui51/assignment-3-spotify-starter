@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 // This goes against the best practices, but I don't get paid for this shit
-describe('Interactive tests', () => {
+describe('Interactive tests -- these take a hot minute', () => {
   it('Get the auth cookies from Spotify', () => {
     cy.visit('https://www.spotify.com/us/login', { log: false });
 

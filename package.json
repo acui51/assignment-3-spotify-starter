@@ -6,7 +6,10 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest"
+    "test": "jest && ./node_modules/.bin/cypress run --browser chrome",
+    "test:regular": "jest",
+    "test:interactive": "./node_modules/.bin/cypress run --browser chrome",
+    "test:interactive-headed": "./node_modules/.bin/cypress run --browser chrome --headed"
   },
   "jest": {
     "preset": "jest-expo",
