@@ -1,7 +1,8 @@
+import getEnv from './env';
 import { Platform } from 'react-native';
 import { useState, useEffect } from 'react';
 import { ResponseType, useAuthRequest, makeRedirectUri } from 'expo-auth-session';
-import { getMyTopTracks, getAlbumTracks, getEnv } from './';
+import { getMyTopTracks, getAlbumTracks } from './apiOptions';
 
 import * as WebBrowser from 'expo-web-browser';
 

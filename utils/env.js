@@ -20,7 +20,7 @@ const ENV = {
     'user-read-email',
     'user-read-private',
   ],
-  REDIRECT_URI: redirectUri('localhost:19000'),
+  REDIRECT_URI: redirectUri('exp://10.34.64.80:19000'),
   // REDIRECT_URI: redirectUri(/*add your uri here!*/),
   ALBUM_ID: '2nLOHgzXzwFEpl62zAgCEC?si=92gvi84ZTLKfMD-YgYWAUw',
   SPOTIFY_API: {

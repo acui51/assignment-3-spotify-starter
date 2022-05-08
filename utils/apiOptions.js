@@ -1,9 +1,15 @@
 import axios from 'axios';
-import { getEnv } from './';
+import CachedTopTracks from './topTracksCache.json';
+import CachedAlbumTracks from './albumTracksCache.json';
+import getEnv from './env';
 
 const {
   SPOTIFY_API: { SHORT_TERM_API, LONG_TERM_API, ALBUM_TRACK_API_GETTER },
 } = getEnv();
+
+const NETWORK_FAILURE = new Error(
+  'Network failure.\nCheck console for more details.\nRandom cached data is returned.'
+);
 
 const fetcher = async (url, token) => {
   try {
@@ -21,12 +27,16 @@ const fetcher = async (url, token) => {
 };
 
 export const getMyTopTracks = async (token) => {
+  const cache = { data: { items: CachedTopTracks } };
   try {
     let res = await fetcher(SHORT_TERM_API, token);
     if (!res || !res.data?.items.length) res = await fetcher(LONG_TERM_API, token);
+    if (!res || !res.data?.items.length) res = cache;
     return res.data?.items;
   } catch (e) {
     console.error(e);
+    alert(NETWORK_FAILURE);
+    return cache;
   }
 };
 
@@ -37,9 +47,11 @@ export const getAlbumTracks = async (albumId, token) => {
       item.album = { images: res.data?.images, name: res.data?.name };
       return item;
     });
-    // TO DO maybe reply with a cached version of an album if spotify api is down or sth
+    if (!transformedResponse) return CachedAlbumTracks;
     return transformedResponse;
   } catch (e) {
     console.error(e);
+    alert(NETWORK_FAILURE);
+    return CachedAlbumTracks;
   }
 };
