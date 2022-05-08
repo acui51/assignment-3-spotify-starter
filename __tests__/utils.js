@@ -26,6 +26,23 @@ const findAllByType = (root, type) => {
   return findAll(root, (node) => node.type === type);
 };
 
+const findByTestID = (root, id) => {
+  // test-renderer doesn't support recursive findByTestID
+  // because children components are unmounted
+  if (root.props?.testID == id) return root;
+
+  let result = null;
+  const children = root.children;
+  if (children) {
+    children.some((child) => {
+      if (typeof child === 'string') return false;
+      result = findByTestID(child, id);
+      return result;
+    });
+  }
+  return result;
+};
+
 const toBeCloseTo = (actual, expectedObj, precision = 2) => {
   let pass = false;
   if (actual.toString().includes('%')) {
@@ -51,12 +68,33 @@ const toBeCloseTo = (actual, expectedObj, precision = 2) => {
       };
 };
 
+const isInExpected = (expected, elemToFind) =>
+  expected.some((elemOfExpected) => JSON.stringify(elemOfExpected) === JSON.stringify(elemToFind));
+
 const toBeOf = (actual, expected) => {
   if (!isArr(expected)) throw Error('toBeOf requires an array of options');
   const message = () => `expected ${actual} to be one of ${JSON.stringify(expected)}`;
-  return expected.some(
-    (elemOfExpected) => JSON.stringify(elemOfExpected) === JSON.stringify(actual)
-  )
+  return isInExpected(expected, actual) ? { message, pass: true } : { message, pass: false };
+};
+
+const allOfToBeOf = (actual, expected) => {
+  if (!isArr(expected)) throw Error('allToBeOf requires an array of options');
+  const message = () => `expected ${actual} to be one of ${JSON.stringify(expected)}`;
+  if (!isArr(actual)) {
+    throw Error('allToBeOf requires an array of actual values');
+  }
+  return actual.every((elem) => isInExpected(expected, elem))
+    ? { message, pass: true }
+    : { message, pass: false };
+};
+
+const someOfToBeOf = (actual, expected) => {
+  if (!isArr(expected)) throw Error('someToBeOf requires an array of options');
+  const message = () => `expected ${actual} to be one of ${JSON.stringify(expected)}`;
+  if (!isArr(actual)) {
+    throw Error('someToBeOf requires an array of actual values');
+  }
+  return actual.some((elem) => isInExpected(expected, elem))
     ? { message, pass: true }
     : { message, pass: false };
 };
@@ -70,7 +108,7 @@ const checkStyle = (style, expected) => {
   // }
 };
 
-export { findAll, findAllByType, toBeCloseTo, toBeOf };
+export { findAll, findAllByType, toBeCloseTo, toBeOf, allOfToBeOf, someOfToBeOf };
 
 // TESTS
 
@@ -166,5 +204,29 @@ describe('toBeOf', () => {
   });
   it("toBeOf finds {color: 'red' } in [{color: 'blue'}, {color: 'red'}]", () => {
     expect(toBeOf({ color: 'red' }, [{ color: 'blue' }, { color: 'red' }]).pass).toEqual(true);
+  });
+});
+
+describe('findByTestID', () => {
+  it('findByTestID finds a root node by its testID', () => {
+    const TESTID = genRandomId();
+    const testElem = create(<View testID={TESTID} />);
+    expect(findByTestID(testElem.toJSON(), TESTID)).toBeTruthy();
+  });
+  it('findByTestID finds a node 3 levels deep by its testID', () => {
+    const TESTID = genRandomId();
+    const testElem = create(
+      <View>
+        <View>
+          <View />
+        </View>
+        <View>
+          <View>
+            <View testID={TESTID} />
+          </View>
+        </View>
+      </View>
+    );
+    expect(findByTestID(testElem.toJSON(), TESTID)).toBeTruthy();
   });
 });
