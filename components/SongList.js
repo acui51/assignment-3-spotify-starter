@@ -28,6 +28,7 @@ const SongList = ({ tracks }) => {
         renderItem={renderItems}
         keyExtractor={(_, id) => `${id}`}
         showsVerticalScrollIndicator={false}
+        testID={'SongList'}
       />
     </>
   );

@@ -1,0 +1,13 @@
+{
+  "fixturesFolder": false,
+  "supportFile": "cypress/support/index.js",
+  "pluginsFile": false,
+  "baseUrl": "http://localhost:19006",
+  "chromeWebSecurity": false,
+  "env": {
+    "SPOTIFY_CREDS": {
+      "USERNAME_OR_EMAIL": "",
+      "PASSWORD": ""
+    }
+  }
+}

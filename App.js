@@ -11,7 +11,7 @@ export default function App() {
   let contentDisplayed = null;
 
   if (loggedIn) {
-    contentDisplayed = <SongList tracks={tracks} testID={'SongList'} />;
+    contentDisplayed = <SongList tracks={tracks} />;
   } else {
     contentDisplayed = <SpotifyAuthButton pressFn={setLoggedIn} />;
   }
