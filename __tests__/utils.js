@@ -107,8 +107,7 @@ const checkStyle = (style, expected) => {
   //   return expect.objectContaining(expected);
   // }
 };
-
-export { findAll, findAllByType, toBeCloseTo, toBeOf, allOfToBeOf, someOfToBeOf };
+export { findAll, findAllByType, toBeCloseTo, toBeOf, allOfToBeOf, someOfToBeOf, findByTestID };
 
 // TESTS
 
