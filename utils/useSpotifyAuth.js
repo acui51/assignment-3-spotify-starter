@@ -1,10 +1,14 @@
-import getEnv from './env';
-import { Platform } from 'react-native';
-import { useState, useEffect } from 'react';
-import { ResponseType, useAuthRequest, makeRedirectUri } from 'expo-auth-session';
-import { getMyTopTracks, getAlbumTracks } from './apiOptions';
+import getEnv from "./env";
+import { Platform } from "react-native";
+import { useState, useEffect } from "react";
+import {
+  ResponseType,
+  useAuthRequest,
+  makeRedirectUri,
+} from "expo-auth-session";
+import { getMyTopTracks, getAlbumTracks } from "./apiOptions";
 
-import * as WebBrowser from 'expo-web-browser';
+import * as WebBrowser from "expo-web-browser";
 
 const {
   REDIRECT_URI,
@@ -18,7 +22,7 @@ const {
 WebBrowser.maybeCompleteAuthSession();
 
 const useSpotifyAuth = (ALBUM_ONLY = false) => {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
   const [tracks, setTracks] = useState([]);
   const [_, response, promptAsync] = useAuthRequest(
     {
@@ -29,7 +33,7 @@ const useSpotifyAuth = (ALBUM_ONLY = false) => {
       // this must be set to false
       usePKCE: false,
       redirectUri:
-        Platform.OS !== 'web'
+        Platform.OS !== "web"
           ? REDIRECT_URI
           : makeRedirectUri({
               // scheme: null, // optional for web, mobile default: 'exp'
@@ -42,11 +46,12 @@ const useSpotifyAuth = (ALBUM_ONLY = false) => {
   );
 
   useEffect(() => {
-    if (response?.type === 'success') {
+    if (response?.type === "success") {
       const { access_token } = response.params;
       setToken(access_token);
     }
-    if (Platform.OS === 'web' && location.hash) setToken(location.hash.split('=')[1]);
+    if (Platform.OS === "web" && location.hash)
+      setToken(location.hash.split("=")[1]);
   }, [response]);
 
   useEffect(() => {
@@ -71,14 +76,14 @@ const useSpotifyAuth = (ALBUM_ONLY = false) => {
 
   const setLoggedIn = () => {
     promptAsync(
-      Platform.OS === 'web'
-        ? { windowName: '_self' }
+      Platform.OS === "web"
+        ? { windowName: "_self" }
         : /* this is for forcing the popup to be created within the same window so needs same context */
           {}
     );
   };
   // TO DO: pick better naming conventions
-  return [token ?? undefined, setLoggedIn, tracks];
+  return { token: token ?? undefined, tracks, getSpotifyAuth: setLoggedIn };
 };
 
 export default useSpotifyAuth;
