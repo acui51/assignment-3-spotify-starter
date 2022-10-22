@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 
-// ***** TODO: Fill in your constants here ***** //
+// ***** TODO 1: Fill in your constants here ***** //
 const CLIENT_ID = "";
 const REDIRECT_URI = "";
 const ALBUM_ID = "2nLOHgzXzwFEpl62zAgCEC?si=92gvi84ZTLKfMD-YgYWAUw"; // By default, this is the Weeknd's Album's "DAWN FM"
@@ -8,8 +8,9 @@ const ALBUM_ID = "2nLOHgzXzwFEpl62zAgCEC?si=92gvi84ZTLKfMD-YgYWAUw"; // By defau
 
 const redirectUri = (uri) => {
   if (!uri) {
-    console.log("Please add your redirect uri!");
-    alert("Please add your redirect uri!");
+    const err = new Error("No redirect URI provided.\nPlease provide a redirect URI in env.js.\n You can find the file in utils/env.js.");
+    console.error(err);
+    alert(err);
   }
   return Platform.OS === "web" ? "http://localhost:19006/" : uri;
 };
@@ -26,8 +27,8 @@ const ENV = {
     "user-read-email",
     "user-read-private",
   ],
-  REDIRECT_URI: redirectUri("exp://127.0.0.1:19000"),
-  // REDIRECT_URI: redirectUri(/*add your uri here!*/),
+  // TODO 2: Read the spec and add your own redirect uri
+  REDIRECT_URI: redirectUri(/*remove this comment & add your uri here!*/),
   ALBUM_ID: "2nLOHgzXzwFEpl62zAgCEC?si=92gvi84ZTLKfMD-YgYWAUw",
   SPOTIFY_API: {
     // Endpoints for auth & token flow

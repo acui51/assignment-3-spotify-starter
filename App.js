@@ -3,7 +3,7 @@ import { useSpotifyAuth } from "./utils";
 import { Themes } from "./assets/Themes";
 
 export default function App() {
-  // Pass in true to useSpotifyAuth to use the album ID instead of top tracks
+  // Pass in true to useSpotifyAuth to use the album ID (in env.js) instead of top tracks
   const { token, tracks, getSpotifyAuth } = useSpotifyAuth();
 
   return (
