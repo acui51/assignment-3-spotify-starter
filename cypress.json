@@ -6,8 +6,8 @@
   "chromeWebSecurity": false,
   "env": {
     "SPOTIFY_CREDS": {
-      "USERNAME_OR_EMAIL": "",
-      "PASSWORD": ""
+      "USERNAME_OR_EMAIL": "TODO: remove this and replace with username or email",
+      "PASSWORD": "TODO: remove this and replace with your password"
     }
   }
 }
